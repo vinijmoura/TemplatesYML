@@ -21,12 +21,16 @@ runs:
       dotnet-version: ${{inputs.DotNetCoreVersion}}
   - name: Restore packages
     run: dotnet restore
+    shell: bash
   - name: Build app
     run: dotnet build --configuration ${{inputs.Configuration}} --no-restore
+    shell: bash
   - name: Test app
     run: dotnet test --no-build
+    shell: bash
   - name: Publish app for deploy
     run: dotnet publish --configuration ${{inputs.Configuration}} --no-build --output "${{inputs.WebAppPackagePath}}"
+    shell: bash
   - name: Upload a Build Artifact
     uses: actions/upload-artifact@v2.2.4
     with:
