@@ -15,22 +15,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - uses: actions/checkout@v2
-    - name: Setup .NET Core SDK ${{inputs.DotNetCoreVersion}}
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{inputs.DotNetCoreVersion}}
-    - name: Restore packages
-      run: dotnet restore
-    - name: Build app
-      run: dotnet build --configuration ${{inputs.Configuration}} --no-restore
-    - name: Test app
-      run: dotnet test --no-build
-    - name: Publish app for deploy
-      run: dotnet publish --configuration ${{inputs.Configuration}} --no-build --output "${{inputs.WebAppPackagePath}}"
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: NetCorePublish
-        path: ${{inputs.WebAppPackagePath}}
+  - name: Setup .NET Core SDK ${{inputs.DotNetCoreVersion}}
+    uses: actions/setup-dotnet@v1
+    with:
+      dotnet-version: ${{inputs.DotNetCoreVersion}}
+  - name: Restore packages
+    run: dotnet restore
+  - name: Build app
+    run: dotnet build --configuration ${{inputs.Configuration}} --no-restore
+  - name: Test app
+    run: dotnet test --no-build
+  - name: Publish app for deploy
+    run: dotnet publish --configuration ${{inputs.Configuration}} --no-build --output "${{inputs.WebAppPackagePath}}"
+  - name: Upload a Build Artifact
+    uses: actions/upload-artifact@v2.2.4
+    with:
+      name: NetCorePublish
+      path: ${{inputs.WebAppPackagePath}}
     
